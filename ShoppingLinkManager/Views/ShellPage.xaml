@@ -49,6 +49,7 @@
                         <SymbolIcon Symbol="Home" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItemSeparator />
                 <NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ViewAll" />
@@ -64,6 +65,7 @@
                             <SymbolIcon Symbol="Add" />
                         </NavigationViewItem.Icon>
                     </NavigationViewItem>
+                    <NavigationViewItemSeparator />
                 </StackPanel>
             </NavigationView.PaneFooter>
 
