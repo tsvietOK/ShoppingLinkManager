@@ -46,29 +46,46 @@
                 -->
                 <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;" />
+                        <SymbolIcon Symbol="Home" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf0e2;" />
+                        <SymbolIcon Symbol="ViewAll" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <NavigationView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                    </Grid>
-                </DataTemplate>
-            </NavigationView.HeaderTemplate>
+            <NavigationView.PaneFooter>
+                <StackPanel x:Name="FooterStackPanel"
+                            Orientation="Vertical"
+                            Visibility="Visible">
+                    <NavigationViewItem Content="Add">
+                        <NavigationViewItem.Icon>
+                            <SymbolIcon Symbol="Add" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
             <i:Interaction.Behaviors>
                 <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
                     <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                            </Grid>
+                            <StackPanel HorizontalAlignment="Stretch"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                <TextBlock VerticalAlignment="Center"
+                                           Style="{ThemeResource TitleTextBlockStyle}"
+                                           Text="{Binding}" />
+                                <CommandBar Background="Transparent"
+                                            DefaultLabelPosition="Right"
+                                            IsOpen="False">
+                                    <!--<AppBarButton Icon="Add" Label="Add" />-->
+                                    <AppBarButton Icon="Edit" Label="Rename" />
+                                    <AppBarSeparator />
+                                    <AppBarButton Icon="Delete" Label="Delete" />
+                                </CommandBar>
+                            </StackPanel>
                         </DataTemplate>
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
