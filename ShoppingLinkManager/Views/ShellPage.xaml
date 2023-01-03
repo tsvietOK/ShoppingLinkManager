@@ -60,7 +60,7 @@
                 <StackPanel x:Name="FooterStackPanel"
                             Orientation="Vertical"
                             Visibility="Visible">
-                    <NavigationViewItem Content="Add">
+                    <NavigationViewItem Content="Add list">
                         <NavigationViewItem.Icon>
                             <SymbolIcon Symbol="Add" />
                         </NavigationViewItem.Icon>
@@ -73,21 +73,25 @@
                 <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
                     <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Stretch"
-                                        Orientation="Horizontal"
-                                        Spacing="10">
-                                <TextBlock VerticalAlignment="Center"
+                            <Grid HorizontalAlignment="Stretch">
+                                <TextBlock Margin="0,0,0,0"
+                                           VerticalAlignment="Center"
                                            Style="{ThemeResource TitleTextBlockStyle}"
                                            Text="{Binding}" />
                                 <CommandBar Background="Transparent"
                                             DefaultLabelPosition="Right"
                                             IsOpen="False">
                                     <!--<AppBarButton Icon="Add" Label="Add" />-->
-                                    <AppBarButton Icon="Edit" Label="Rename" />
+                                    <AppBarButton Icon="Edit" Label="Rename list" />
                                     <AppBarSeparator />
-                                    <AppBarButton Icon="Delete" Label="Delete" />
+                                    <AppBarButton Icon="Delete" Label="Delete list" />
                                 </CommandBar>
-                            </StackPanel>
+
+                                <Border Height="1"
+                                        Margin="0,0,0,0"
+                                        VerticalAlignment="Bottom"
+                                        Background="Gray" />
+                            </Grid>
                         </DataTemplate>
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
