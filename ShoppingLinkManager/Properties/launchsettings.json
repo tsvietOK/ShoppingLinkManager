@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "ShoppingLinkManager (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "ShoppingLinkManager (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
