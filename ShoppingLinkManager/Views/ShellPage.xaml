@@ -54,6 +54,9 @@
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ViewAll" />
                     </NavigationViewItem.Icon>
+                    <NavigationViewItem.InfoBadge>
+                        <InfoBadge Value="5" />
+                    </NavigationViewItem.InfoBadge>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
