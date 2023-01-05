@@ -6,9 +6,32 @@
       xmlns:helpers="using:ShoppingLinkManager.Helpers"
       xmlns:i="using:Microsoft.Xaml.Interactivity"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:viewmodels="using:ShoppingLinkManager.ViewModels"
+      xmlns:views="using:ShoppingLinkManager.Views"
       Loaded="OnLoaded">
 
     <Grid>
+        <Grid.Resources>
+            <!--<NavigationViewItem x:Name="MainNavItem"
+                                x:Uid="Shell_Main"
+                                helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel">
+                <NavigationViewItem.Icon>
+                    <SymbolIcon Symbol="Home" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>-->
+            <!--<DataTemplate x:Key="NavItemDataTemplate" x:DataType="viewmodels:ShoppingListItem">
+                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Home" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </DataTemplate>-->
+            <!--<DataTemplate x:Key="ViewModelTemplate" />
+            <DataTemplate x:Key="NavigationItemTemplate" />
+            <views:NavigationItemTemplateSelector x:Key="NavigationItemTemplateSelector"
+                                                  NavigationItemTemplate="{StaticResource NavigationItemTemplate}"
+                                                  ViewModelTemplate="{StaticResource ViewModelTemplate}" />-->
+        </Grid.Resources>
         <Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
@@ -32,11 +55,21 @@
                         IsBackButtonVisible="Visible"
                         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                         IsSettingsVisible="True"
+                        MenuItemsSource="{x:Bind ViewModel.NavItems, Mode=OneWay}"
+                        PaneDisplayMode="Auto"
                         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox PlaceholderText="Search for list" QueryIcon="Find" />
             </NavigationView.AutoSuggestBox>
+            <!--<NavigationView.PaneCustomContent>
+                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Home" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.PaneCustomContent>-->
             <NavigationView.MenuItems>
+
                 <!--
                 TODO: Update item titles by updating <x:Uid>.Content entries in Strings/en-us/Resources.resw.
                 https://docs.microsoft.com/windows/uwp/app-resources/localize-strings-ui-manifest#refer-to-a-string-resource-identifier-from-xaml
@@ -44,26 +77,30 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel">
+                <!--<NavigationViewItemHeader Content="Shopping lists" />-->
+
+                <!--<NavigationViewItem helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel" Content="3216565">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="Home" />
                     </NavigationViewItem.Icon>
-                </NavigationViewItem>
-                <NavigationViewItemSeparator />
-                <NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
+                </NavigationViewItem>-->
+                <!--<NavigationViewItemSeparator />-->
+                <!--<NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ViewAll" />
                     </NavigationViewItem.Icon>
                     <NavigationViewItem.InfoBadge>
                         <InfoBadge Value="5" />
                     </NavigationViewItem.InfoBadge>
-                </NavigationViewItem>
+                </NavigationViewItem>-->
             </NavigationView.MenuItems>
             <NavigationView.PaneFooter>
                 <StackPanel x:Name="FooterStackPanel"
                             Orientation="Vertical"
                             Visibility="Visible">
-                    <NavigationViewItem Content="Add list">
+                    <NavigationViewItem x:Name="AddNavItem"
+                                        Content="Add list"
+                                        PointerPressed="AddNavItem_PointerPressed">
                         <NavigationViewItem.Icon>
                             <SymbolIcon Symbol="Add" />
                         </NavigationViewItem.Icon>
@@ -72,7 +109,7 @@
                 </StackPanel>
             </NavigationView.PaneFooter>
 
-            <i:Interaction.Behaviors>
+            <!--<i:Interaction.Behaviors>
                 <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
                     <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
@@ -84,7 +121,9 @@
                                 <CommandBar Background="Transparent"
                                             DefaultLabelPosition="Right"
                                             IsOpen="False">
-                                    <!--<AppBarButton Icon="Add" Label="Add" />-->
+            -->
+            <!--<AppBarButton Icon="Add" Label="Add" />-->
+            <!--
                                     <AppBarButton Icon="Edit" Label="Rename list" />
                                     <AppBarSeparator />
                                     <AppBarButton Icon="Delete" Label="Delete list" />
@@ -93,8 +132,8 @@
                         </DataTemplate>
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
-            </i:Interaction.Behaviors>
-            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
+            </i:Interaction.Behaviors>-->
+            <Grid>
                 <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Collections.ObjectModel;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
@@ -34,9 +35,15 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+
+        //var shoppingListItem = new ShoppingListItem(MainNavItem, typeof(MainPage));
+        //ViewModel.ShoppingListItems.Add(MainNavItem);
+
+        // somewhere else, like in your Page constructor or a CollectionChanged handler
+        
     }
 
-    private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
@@ -83,5 +90,31 @@ public sealed partial class ShellPage : Page
         var result = navigationService.GoBack();
 
         args.Handled = result;
+    }
+
+    private void AddNavItem_PointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        var guid = Guid.NewGuid().ToString();
+        ViewModel.ShoppingListItems.Add(new ShoppingListItem(typeof(ContentGridViewModel), guid, guid));
+    }
+
+    
+}
+
+class NavigationItemTemplateSelector : DataTemplateSelector
+{
+    public DataTemplate ViewModelTemplate
+    {
+        get; set;
+    }
+    public DataTemplate NavigationItemTemplate
+    {
+        get; set;
+    }
+    protected override DataTemplate SelectTemplateCore(object item)
+    {
+        return item is ShellViewModel
+            ? ViewModelTemplate
+            : NavigationItemTemplate;
     }
 }
