@@ -5,5 +5,54 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea" />
+    <Grid x:Name="ContentArea">
+        <SplitView x:Name="splitView"
+                   Padding="0"
+                   CompactPaneLength="48"
+                   CornerRadius="3"
+                   DisplayMode="Inline"
+                   IsPaneOpen="True"
+                   OpenPaneLength="320"
+                   PaneBackground="Transparent">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <CommandBar HorizontalAlignment="Left"
+                                Background="Transparent"
+                                DefaultLabelPosition="Right"
+                                IsOpen="False">
+
+                        <AppBarButton Command="{x:Bind ViewModel.AddLinkListItemCommand}"
+                                      Icon="Add"
+                                      IsEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Label="Add list" />
+                        <AppBarButton Icon="Edit"
+                                      IsEnabled="{x:Bind ViewModel.IsRenameButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Label="Rename list" />
+                        <AppBarButton Command="{x:Bind ViewModel.DeleteLinkListItemCommand}"
+                                      Icon="Delete"
+                                      IsEnabled="{x:Bind ViewModel.IsDeleteButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Label="Delete list" />
+                    </CommandBar>
+                    <ListView x:Name="NavLinksList"
+                              Grid.Row="1"
+                              Margin="5,15"
+                              VerticalAlignment="Stretch"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind ViewModel.LinkLists}"
+                              SelectedIndex="{x:Bind ViewModel.SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SelectionMode="Single" />
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid>
+                <Frame x:Name="SplitViewContent" />
+            </Grid>
+        </SplitView>
+    </Grid>
 </Page>
