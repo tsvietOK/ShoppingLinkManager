@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using ShoppingLinkManager.Contracts.Services;
 using ShoppingLinkManager.Contracts.ViewModels;
 
@@ -15,6 +16,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private bool isDeleteButtonEnabled;
     private string selectedItem;
     private int selectedItemIndex;
+    private Visibility noItemsSelectedTextBlockVisibility;
 
     public MainViewModel(INavigationService navigationService)
     {
@@ -41,11 +43,13 @@ public class MainViewModel : ObservableRecipient, INavigationAware
             {
                 IsDeleteButtonEnabled = false;
                 IsRenameButtonEnabled = false;
+                NoItemsSelectedTextBlockVisibility = Visibility.Visible;
             }
             else
             {
                 IsDeleteButtonEnabled = true;
                 IsRenameButtonEnabled = true;
+                NoItemsSelectedTextBlockVisibility = Visibility.Collapsed;
             }
 
         }
@@ -75,6 +79,12 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         set => SetProperty(ref isDeleteButtonEnabled, value);
     }
 
+    public Visibility NoItemsSelectedTextBlockVisibility
+    {
+        get => noItemsSelectedTextBlockVisibility; 
+        set => SetProperty(ref noItemsSelectedTextBlockVisibility, value);
+    }
+
     public RelayCommand AddLinkListItemCommand
     {
         get; set;
@@ -87,12 +97,12 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-        
+
     }
 
     public void OnNavigatedTo(object parameter)
     {
-        
+
     }
 
     private void AddLinkListItem()

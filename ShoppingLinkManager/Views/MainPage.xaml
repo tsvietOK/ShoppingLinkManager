@@ -12,24 +12,40 @@
                    CornerRadius="3"
                    DisplayMode="Inline"
                    IsPaneOpen="True"
-                   OpenPaneLength="320"
+                   OpenPaneLength="280"
                    PaneBackground="Transparent">
             <SplitView.Pane>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <CommandBar HorizontalAlignment="Left"
+                    <StackPanel HorizontalAlignment="Left"
                                 Background="Transparent"
-                                DefaultLabelPosition="Right"
-                                IsOpen="False">
+                                Orientation="Horizontal">
 
-                        <AppBarButton Command="{x:Bind ViewModel.AddLinkListItemCommand}"
+                        <AppBarButton AllowFocusOnInteraction="True"
+                                      Command="{x:Bind ViewModel.AddLinkListItemCommand}"
                                       Icon="Add"
                                       IsEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Label="Add list" />
+                                      Label="Add list">
+                            <AppBarButton.Flyout>
+                                <Flyout x:Name="AddNewItemFlayout" Placement="Bottom">
+                                    <StackPanel Spacing="10">
+                                        <TextBlock Text="Enter a name of the new list:" />
+                                        <TextBox />
+                                        <!--<TextBlock Text="List with this name already exists, choose another one." />-->
+                                        <InfoBar Title="Error"
+                                                 IsClosable="False"
+                                                 IsOpen="True"
+                                                 Message="List with this name already exists, choose another one."
+                                                 Severity="Error" />
+                                        <Button Content="Add" />
+                                    </StackPanel>
+                                </Flyout>
+
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
                         <AppBarButton Icon="Edit"
                                       IsEnabled="{x:Bind ViewModel.IsRenameButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Label="Rename list" />
@@ -37,7 +53,7 @@
                                       Icon="Delete"
                                       IsEnabled="{x:Bind ViewModel.IsDeleteButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Label="Delete list" />
-                    </CommandBar>
+                    </StackPanel>
                     <ListView x:Name="NavLinksList"
                               Grid.Row="1"
                               Margin="5,15"
@@ -50,8 +66,15 @@
                 </Grid>
             </SplitView.Pane>
 
-            <Grid>
-                <Frame x:Name="SplitViewContent" />
+            <Grid Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="3,0,0,0">
+                <TextBlock x:Uid="NoItemsSelectedTextBlock"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource BaseTextBlockStyle}"
+                           Text="No items selected"
+                           TextWrapping="WrapWholeWords"
+                           Visibility="{x:Bind ViewModel.NoItemsSelectedTextBlockVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!--<Frame x:Name="SplitViewContent" />-->
             </Grid>
         </SplitView>
     </Grid>
