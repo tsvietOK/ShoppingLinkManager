@@ -53,10 +53,6 @@ public class ShellViewModel : ObservableRecipient
 
     public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
     {
-        NavigationService = navigationService;
-        NavigationService.Navigated += OnNavigated;
-        NavigationViewService = navigationViewService;
-
         NavItems = new();
         //var testNav = new NavigationViewItem()
         //{
@@ -65,9 +61,11 @@ public class ShellViewModel : ObservableRecipient
         //};
         //NavigationHelper.SetNavigateTo(testNav, typeof(ContentGridViewModel).FullName);
 
-        MainNavigationViewItem = new NavigationViewItem();
-        MainNavigationViewItem.Content = "Shell_Main_Name".GetLocalized();
-        MainNavigationViewItem.Icon = new SymbolIcon(Symbol.Home);
+        MainNavigationViewItem = new NavigationViewItem
+        {
+            Content = "Shell_Main_Name".GetLocalized(),
+            Icon = new SymbolIcon(Symbol.Home)
+        };
         NavigationHelper.SetNavigateTo(MainNavigationViewItem, typeof(MainViewModel).FullName);
 
 
@@ -77,6 +75,12 @@ public class ShellViewModel : ObservableRecipient
             NavItems.Add(item);
         }
         ShoppingListItems.CollectionChanged += Items_CollectionChanged;
+
+        NavigationService = navigationService;
+        NavigationService.Navigated += OnNavigated;
+        NavigationViewService = navigationViewService;
+
+
     }
 
     private void Items_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -113,7 +117,7 @@ public class ShellViewModel : ObservableRecipient
             return;
         }
 
-        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
+        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType, e.Parameter);
         if (selectedItem != null)
         {
             Selected = selectedItem;
@@ -123,6 +127,7 @@ public class ShellViewModel : ObservableRecipient
     private IEnumerable<NavigationViewItemBase> MenuItems()
     {
         yield return MainNavigationViewItem;
+        yield return new NavigationViewItemSeparator();
         yield return new NavigationViewItemHeader { Content = "Shopping lists" };
         foreach (var another in ShoppingListItems)
         {
@@ -130,6 +135,7 @@ public class ShellViewModel : ObservableRecipient
             {
                 Content = another.Name,
                 Icon = new SymbolIcon(another.Symbol),
+                Tag = another.Tag,
             };
             NavigationHelper.SetNavigateTo(navItem, typeof(ContentGridViewModel).FullName);
 

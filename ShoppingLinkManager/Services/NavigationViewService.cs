@@ -43,11 +43,11 @@ public class NavigationViewService : INavigationViewService
         }
     }
 
-    public NavigationViewItem? GetSelectedItem(Type pageType)
+    public NavigationViewItem? GetSelectedItem(Type pageType, object parameter)
     {
-        if (_navigationView != null)
+        if (_navigationView != null && _navigationView.MenuItemsSource != null)
         {
-            return GetSelectedItem(_navigationView.MenuItems, pageType) ?? GetSelectedItem(_navigationView.FooterMenuItems, pageType);
+            return GetSelectedItem((IEnumerable<object>)_navigationView.MenuItemsSource, pageType, parameter) ?? GetSelectedItem(_navigationView.FooterMenuItems, pageType);
         }
 
         return null;
@@ -72,8 +72,18 @@ public class NavigationViewService : INavigationViewService
         }
     }
 
-    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType)
+    private NavigationViewItem? GetSelectedItem(IEnumerable<object> menuItems, Type pageType, object? tag = default)
     {
+        if (tag != null)
+        {
+            var item = menuItems.OfType<NavigationViewItem>().SingleOrDefault(x => x.Tag == tag);
+            if (item != null)
+            {
+                return item;
+            }
+        }
+
+
         foreach (var item in menuItems.OfType<NavigationViewItem>())
         {
             if (IsMenuItemForPageType(item, pageType))

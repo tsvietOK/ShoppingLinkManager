@@ -51,13 +51,13 @@
                         Canvas.ZIndex="0"
                         DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
                         ExpandedModeThresholdWidth="1280"
-                        Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}"
+                        Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsBackButtonVisible="Visible"
-                        IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
+                        IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsSettingsVisible="True"
-                        MenuItemsSource="{x:Bind ViewModel.NavItems, Mode=OneWay}"
+                        MenuItemsSource="{x:Bind ViewModel.NavItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         PaneDisplayMode="Auto"
-                        SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
+                        SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox PlaceholderText="Search for list" QueryIcon="Find" />
             </NavigationView.AutoSuggestBox>
@@ -68,24 +68,25 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.PaneCustomContent>-->
-            <NavigationView.MenuItems>
+            <!--<NavigationView.MenuItems>
 
-                <!--
+            -->
+            <!--
                 TODO: Update item titles by updating <x:Uid>.Content entries in Strings/en-us/Resources.resw.
                 https://docs.microsoft.com/windows/uwp/app-resources/localize-strings-ui-manifest#refer-to-a-string-resource-identifier-from-xaml
 
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
-                -->
-                <!--<NavigationViewItemHeader Content="Shopping lists" />-->
+            -->
+            <!--<NavigationViewItemHeader Content="Shopping lists" />-->
 
-                <!--<NavigationViewItem helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel" Content="3216565">
+            <!--<NavigationViewItem helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.MainViewModel" Content="3216565">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="Home" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>-->
-                <!--<NavigationViewItemSeparator />-->
-                <!--<NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
+            <!--<NavigationViewItemSeparator />-->
+            <!--<NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavigationHelper.NavigateTo="ShoppingLinkManager.ViewModels.ContentGridViewModel">
                     <NavigationViewItem.Icon>
                         <SymbolIcon Symbol="ViewAll" />
                     </NavigationViewItem.Icon>
@@ -93,7 +94,8 @@
                         <InfoBadge Value="5" />
                     </NavigationViewItem.InfoBadge>
                 </NavigationViewItem>-->
-            </NavigationView.MenuItems>
+            <!--
+            </NavigationView.MenuItems>-->
             <NavigationView.PaneFooter>
                 <StackPanel x:Name="FooterStackPanel"
                             Orientation="Vertical"
