@@ -111,9 +111,9 @@
                 </StackPanel>
             </NavigationView.PaneFooter>
 
-            <!--<i:Interaction.Behaviors>
-                <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
-                    <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
+            <i:Interaction.Behaviors>
+                <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <!--<behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch">
                                 <TextBlock Margin="0,0,0,0"
@@ -123,19 +123,19 @@
                                 <CommandBar Background="Transparent"
                                             DefaultLabelPosition="Right"
                                             IsOpen="False">
-            -->
-            <!--<AppBarButton Icon="Add" Label="Add" />-->
-            <!--
+
+                                    <AppBarButton Icon="Add" Label="Add" />
+
                                     <AppBarButton Icon="Edit" Label="Rename list" />
                                     <AppBarSeparator />
                                     <AppBarButton Icon="Delete" Label="Delete list" />
                                 </CommandBar>
                             </Grid>
                         </DataTemplate>
-                    </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
+                    </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>-->
                 </behaviors:NavigationViewHeaderBehavior>
-            </i:Interaction.Behaviors>-->
-            <Grid>
+            </i:Interaction.Behaviors>
+            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
                 <Frame x:Name="NavigationFrame" />
             </Grid>
         </NavigationView>

@@ -2,11 +2,34 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:animations="using:CommunityToolkit.WinUI.UI.Animations"
+      xmlns:behaviors="using:ShoppingLinkManager.Behaviors"
       xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:models="using:ShoppingLinkManager.Core.Models"
+      xmlns:viewmodels="using:ShoppingLinkManager.ViewModels"
       mc:Ignorable="d">
+
+    <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+        <DataTemplate x:DataType="viewmodels:MainViewModel">
+            <Grid HorizontalAlignment="Stretch">
+                <TextBlock Margin="0,0,0,0"
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource TitleTextBlockStyle}"
+                           Text="{Binding}" />
+                <CommandBar Background="Transparent"
+                            DefaultLabelPosition="Right"
+                            IsOpen="False">
+
+                    <!--<AppBarButton Icon="Add" Label="Add" />-->
+
+                    <AppBarButton Icon="Edit" Label="Rename list" />
+                    <AppBarSeparator />
+                    <AppBarButton Icon="Delete" Label="Delete list" />
+                </CommandBar>
+            </Grid>
+        </DataTemplate>
+    </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
     <Grid x:Name="ContentArea">
         <controls:AdaptiveGridView animations:Connected.ListItemElementName="itemThumbnail"
