@@ -16,7 +16,8 @@
                 <TextBlock Margin="0,0,0,0"
                            VerticalAlignment="Center"
                            Style="{ThemeResource TitleTextBlockStyle}"
-                           Text="{Binding}" />
+                           Text="{Binding}"
+                           TextWrapping="WrapWholeWords" />
                 <CommandBar Background="Transparent"
                             DefaultLabelPosition="Right"
                             IsOpen="False">
