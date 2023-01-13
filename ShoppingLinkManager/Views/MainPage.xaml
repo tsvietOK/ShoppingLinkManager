@@ -17,14 +17,18 @@
                    OpenPaneLength="280"
                    PaneBackground="Transparent">
             <SplitView.Pane>
-                <Grid>
+                <Grid Margin="10">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <StackPanel HorizontalAlignment="Left"
+                    <AutoSuggestBox Grid.Row="0" PlaceholderText="Search" />
+                    <StackPanel Grid.Row="1"
+                                HorizontalAlignment="Left"
                                 Background="Transparent"
                                 Orientation="Horizontal">
+
 
                         <AppBarButton AllowFocusOnInteraction="True"
                                       Command="{x:Bind ViewModel.AddLinkListItemCommand}"
@@ -57,8 +61,7 @@
                                       Label="Delete list" />
                     </StackPanel>
                     <ListView x:Name="NavLinksList"
-                              Grid.Row="1"
-                              Margin="5,15"
+                              Grid.Row="2"
                               VerticalAlignment="Stretch"
                               IsItemClickEnabled="True"
                               ItemsSource="{x:Bind ViewModel.LinkLists}"
