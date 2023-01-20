@@ -11,22 +11,17 @@ namespace ShoppingLinkManager.ViewModels;
 
 public class MainViewModel : ObservableRecipient, INavigationAware
 {
-    private readonly INavigationService navigationService;
-
     private bool isAddButtonEnabled = true;
     private bool isRenameButtonEnabled;
     private bool isDeleteButtonEnabled;
     private string selectedItem;
     private int selectedItemIndex;
-    private Visibility noItemsSelectedTextBlockVisibility;
     private InfoBarSeverity infoBarSeverity;
     private bool doesListNameAlreadyExist;
     private string newListName;
 
-    public MainViewModel(INavigationService navigationService)
+    public MainViewModel()
     {
-        this.navigationService = navigationService;
-
         AddLinkListItemCommand = new RelayCommand(AddLinkListItem);
         DeleteLinkListItemCommand = new RelayCommand(DeleteLinkListItem);
 
