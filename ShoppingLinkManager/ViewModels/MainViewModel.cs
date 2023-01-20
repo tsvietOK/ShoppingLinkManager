@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using ShoppingLinkManager.Contracts.Services;
 using ShoppingLinkManager.Contracts.ViewModels;
 
@@ -17,6 +19,9 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private string selectedItem;
     private int selectedItemIndex;
     private Visibility noItemsSelectedTextBlockVisibility;
+    private InfoBarSeverity infoBarSeverity;
+    private bool doesListNameAlreadyExist;
+    private string newListName;
 
     public MainViewModel(INavigationService navigationService)
     {
@@ -43,15 +48,12 @@ public class MainViewModel : ObservableRecipient, INavigationAware
             {
                 IsDeleteButtonEnabled = false;
                 IsRenameButtonEnabled = false;
-                NoItemsSelectedTextBlockVisibility = Visibility.Visible;
             }
             else
             {
                 IsDeleteButtonEnabled = true;
                 IsRenameButtonEnabled = true;
-                NoItemsSelectedTextBlockVisibility = Visibility.Collapsed;
             }
-
         }
     }
 
@@ -79,10 +81,28 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         set => SetProperty(ref isDeleteButtonEnabled, value);
     }
 
-    public Visibility NoItemsSelectedTextBlockVisibility
+    public string NewListName
     {
-        get => noItemsSelectedTextBlockVisibility; 
-        set => SetProperty(ref noItemsSelectedTextBlockVisibility, value);
+        get => newListName;
+        set
+        {
+            if (SetProperty(ref newListName, value))
+            {
+                DoesListNameAlreadyExist = LinkLists.Contains(value);
+            }
+        }
+    }
+
+    public bool DoesListNameAlreadyExist
+    {
+        get => doesListNameAlreadyExist;
+        set => SetProperty(ref doesListNameAlreadyExist, value);
+    }
+
+    public InfoBarSeverity InfoBarSeverity
+    {
+        get => infoBarSeverity;
+        set => SetProperty(ref infoBarSeverity, value);
     }
 
     public RelayCommand AddLinkListItemCommand
@@ -107,9 +127,10 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     private void AddLinkListItem()
     {
-        var count = LinkLists.Count;
-        count++;
-        LinkLists.Add(count.ToString());
+        //var count = LinkLists.Count;
+        //count++;
+        LinkLists.Add(new string(NewListName));
+        NewListName = string.Empty;
     }
 
     private void DeleteLinkListItem()
