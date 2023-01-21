@@ -11,11 +11,6 @@ public static class SettingsStorageExtensions
 {
     private const string FileExtension = ".json";
 
-    public static bool IsRoamingStorageAvailable(this ApplicationData appData)
-    {
-        return appData.RoamingStorageQuota == 0;
-    }
-
     public static async Task SaveAsync<T>(this StorageFolder folder, string name, T content)
     {
         var file = await folder.CreateFileAsync(GetFileName(name), CreationCollisionOption.ReplaceExisting);
