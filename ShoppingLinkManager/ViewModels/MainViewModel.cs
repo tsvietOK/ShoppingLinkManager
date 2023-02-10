@@ -6,34 +6,41 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using ShoppingLinkManager.Contracts.Services;
 using ShoppingLinkManager.Contracts.ViewModels;
+using ShoppingLinkManager.Core.Contracts.Services;
+using ShoppingLinkManager.Core.Models;
+using ShoppingLinkManager.Core.Services;
 
 namespace ShoppingLinkManager.ViewModels;
 
 public class MainViewModel : ObservableRecipient, INavigationAware
 {
+    private readonly IShoppingListService shoppingListService;
+
     private bool isAddButtonEnabled = true;
     private bool isRenameButtonEnabled;
     private bool isDeleteButtonEnabled;
-    private string selectedItem;
+    private ShoppingList selectedItem;
     private int selectedItemIndex;
     private InfoBarSeverity infoBarSeverity;
     private bool doesListNameAlreadyExist;
     private string newListName;
 
-    public MainViewModel()
+    public MainViewModel(IShoppingListService shoppingListService)
     {
+        this.shoppingListService = shoppingListService;
+
         AddLinkListItemCommand = new RelayCommand(AddLinkListItem);
         DeleteLinkListItemCommand = new RelayCommand(DeleteLinkListItem);
 
-        LinkLists = new ObservableCollection<string>();
+        ShoppingLists = new ObservableCollection<ShoppingList>();
     }
 
-    public ObservableCollection<string> LinkLists
+    public ObservableCollection<ShoppingList> ShoppingLists
     {
         get; set;
     }
 
-    public string SelectedItem
+    public ShoppingList SelectedItem
     {
         get => selectedItem;
         set
@@ -83,7 +90,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         {
             if (SetProperty(ref newListName, value))
             {
-                DoesListNameAlreadyExist = LinkLists.Contains(value);
+                DoesListNameAlreadyExist = ShoppingLists.Any(x => x.Name == value);
             }
         }
     }
@@ -112,25 +119,38 @@ public class MainViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
-
+        ShoppingLists.CollectionChanged -= ShoppingLists_CollectionChanged;
     }
 
-    public void OnNavigatedTo(object parameter)
+    public async void OnNavigatedTo(object parameter)
     {
+        ShoppingLists.Clear();
 
+        var data = await shoppingListService.GetShoppingListsAsync();
+        foreach (var item in data)
+        {
+            ShoppingLists.Add(item);
+        }
+
+        ShoppingLists.CollectionChanged += ShoppingLists_CollectionChanged;
+    }
+
+    private void ShoppingLists_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        shoppingListService.SaveShoppingListsAsync(ShoppingLists);
     }
 
     private void AddLinkListItem()
     {
         //var count = LinkLists.Count;
         //count++;
-        LinkLists.Add(new string(NewListName));
+        ShoppingLists.Add(new ShoppingList(NewListName));
         NewListName = string.Empty;
     }
 
     private void DeleteLinkListItem()
     {
-        LinkLists.RemoveAt(SelectedItemIndex);
+        ShoppingLists.RemoveAt(SelectedItemIndex);
     }
 
 }

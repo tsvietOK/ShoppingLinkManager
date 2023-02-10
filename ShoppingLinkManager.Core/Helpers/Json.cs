@@ -16,7 +16,7 @@ public static class Json
     {
         return await Task.Run<string>(() =>
         {
-            return JsonConvert.SerializeObject(value);
+            return JsonConvert.SerializeObject(value, Formatting.Indented);
         });
     }
 }

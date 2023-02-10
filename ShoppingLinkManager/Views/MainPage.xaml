@@ -6,6 +6,7 @@
       xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:models="using:ShoppingLinkManager.Core.Models"
       mc:Ignorable="d">
     <Page.Resources>
         <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
@@ -15,7 +16,7 @@
         <Grid>
             <controls:ListDetailsView BackButtonBehavior="Inline"
                                       Background="Transparent"
-                                      ItemsSource="{x:Bind ViewModel.LinkLists}"
+                                      ItemsSource="{x:Bind ViewModel.ShoppingLists}"
                                       SelectedIndex="{x:Bind ViewModel.SelectedItemIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       SelectedItem="{x:Bind ViewModel.SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <controls:ListDetailsView.NoSelectionContentTemplate>
@@ -39,16 +40,16 @@
                     </DataTemplate>
                 </controls:ListDetailsView.ListPaneEmptyContentTemplate>
                 <controls:ListDetailsView.ListHeaderTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:ShoppingList">
                         <Grid Height="60">
                             <TextBlock VerticalAlignment="Center"
                                        Style="{StaticResource TitleTextBlockStyle}"
-                                       Text="{Binding}" />
+                                       Text="{x:Bind Name}" />
                         </Grid>
                     </DataTemplate>
                 </controls:ListDetailsView.ListHeaderTemplate>
                 <controls:ListDetailsView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="models:ShoppingList">
                         <Grid Height="60">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -61,18 +62,17 @@
                                         Margin="{StaticResource SmallLeftMargin}"
                                         VerticalAlignment="Center">
                                 <TextBlock Style="{StaticResource BaseTextBlockStyle}"
-                                           Text="{Binding}"
+                                           Text="{x:Bind Name}"
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="NoWrap"
-                                           ToolTipService.ToolTip="{Binding}" />
+                                           ToolTipService.ToolTip="{x:Bind Name}" />
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="0 items" />
                             </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </controls:ListDetailsView.ItemTemplate>
                 <controls:ListDetailsView.DetailsTemplate>
-                    <DataTemplate>
-
+                    <DataTemplate x:DataType="models:ShoppingList">
                         <RelativePanel>
                             <!--<controls:ImageEx x:Name="FromEllipse"
                                               Width="50"
@@ -87,10 +87,10 @@
                             <TextBlock Margin="12,0,0,0"
                                        RelativePanel.RightOf="FromEllipse"
                                        Style="{StaticResource SubheaderTextBlockStyle}"
-                                       Text="{Binding}"
+                                       Text="{x:Bind Name}"
                                        TextTrimming="CharacterEllipsis"
                                        TextWrapping="NoWrap"
-                                       ToolTipService.ToolTip="{Binding}" />
+                                       ToolTipService.ToolTip="{x:Bind Name}" />
 
                             <!--<TextBlock x:Name="SubjectLine"
                                        Margin="0,12,0,0"
