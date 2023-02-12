@@ -151,13 +151,11 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         //var count = LinkLists.Count;
         //count++;
         ShoppingLists.Add(new ShoppingList(NewListName.Trim()));
-        NewListName = string.Empty;
     }
 
     private void RenameLinkListItem()
     {
         SelectedItem.Name = NewListName;
-        NewListName = string.Empty;
 
         shoppingListService.SaveShoppingListsAsync(ShoppingLists);
     }

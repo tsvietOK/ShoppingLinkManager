@@ -114,7 +114,9 @@
                                       IsEnabled="{x:Bind ViewModel.IsAddButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Label="Add list">
                             <AppBarButton.Flyout>
-                                <Flyout x:Name="AddNewItemFlayout" Placement="Bottom">
+                                <Flyout x:Name="AddNewItemFlayout"
+                                        Closed="AddNewItemFlayout_Closed"
+                                        Placement="Bottom">
                                     <StackPanel Spacing="10">
                                         <TextBlock Text="Enter a name of the new list:" />
                                         <TextBox Text="{x:Bind ViewModel.NewListName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -136,7 +138,9 @@
                                       IsEnabled="{x:Bind ViewModel.IsRenameButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Label="Rename list">
                             <AppBarButton.Flyout>
-                                <Flyout x:Name="RenameItemFlayout" Placement="Bottom">
+                                <Flyout x:Name="RenameItemFlayout"
+                                        Closed="RenameItemFlayout_Closed"
+                                        Placement="Bottom">
                                     <StackPanel Spacing="10">
                                         <TextBlock Text="Enter a new name of the list:" />
                                         <TextBox Text="{x:Bind ViewModel.NewListName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

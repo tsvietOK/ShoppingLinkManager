@@ -26,4 +26,14 @@ public sealed partial class MainPage : Page
     {
         RenameItemFlayout.Hide();
     }
+
+    private void RenameItemFlayout_Closed(object sender, object e)
+    {
+        ViewModel.NewListName = string.Empty;
+    }
+
+    private void AddNewItemFlayout_Closed(object sender, object e)
+    {
+        ViewModel.NewListName = string.Empty;
+    }
 }
