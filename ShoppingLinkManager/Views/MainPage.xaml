@@ -119,13 +119,13 @@
                                         <TextBlock Text="Enter a name of the new list:" />
                                         <TextBox Text="{x:Bind ViewModel.NewListName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <InfoBar IsClosable="False"
-                                                 IsOpen="{x:Bind ViewModel.DoesListNameAlreadyExist, Mode=TwoWay}"
-                                                 Message="List with this name already exists"
+                                                 IsOpen="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay}"
+                                                 Message="List with this name already exists or name is empty"
                                                  Severity="Error" />
                                         <Button Click="Button_Click"
                                                 Command="{x:Bind ViewModel.AddLinkListItemCommand}"
                                                 Content="Add"
-                                                IsEnabled="{x:Bind ViewModel.DoesListNameAlreadyExist, Mode=TwoWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                IsEnabled="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay, Converter={StaticResource BoolNegationConverter}}" />
                                     </StackPanel>
                                 </Flyout>
 

@@ -22,7 +22,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private ShoppingList selectedItem;
     private int selectedItemIndex;
     private InfoBarSeverity infoBarSeverity;
-    private bool doesListNameAlreadyExist;
+    private bool isListNameValid = true;
     private string newListName;
 
     public MainViewModel(IShoppingListService shoppingListService)
@@ -90,15 +90,15 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         {
             if (SetProperty(ref newListName, value))
             {
-                DoesListNameAlreadyExist = ShoppingLists.Any(x => x.Name == value);
+                IsListNameValid = ShoppingLists.Any(x => x.Name == value) || string.IsNullOrWhiteSpace(value);
             }
         }
     }
 
-    public bool DoesListNameAlreadyExist
+    public bool IsListNameValid
     {
-        get => doesListNameAlreadyExist;
-        set => SetProperty(ref doesListNameAlreadyExist, value);
+        get => isListNameValid;
+        set => SetProperty(ref isListNameValid, value);
     }
 
     public InfoBarSeverity InfoBarSeverity
@@ -144,7 +144,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     {
         //var count = LinkLists.Count;
         //count++;
-        ShoppingLists.Add(new ShoppingList(NewListName));
+        ShoppingLists.Add(new ShoppingList(NewListName.Trim()));
         NewListName = string.Empty;
     }
 
