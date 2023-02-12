@@ -17,8 +17,13 @@ public sealed partial class MainPage : Page
         InitializeComponent();
     }
 
-    private void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void AddLinkListButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
         AddNewItemFlayout.Hide();
+    }
+
+    private void RenameLinkListButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        RenameItemFlayout.Hide();
     }
 }

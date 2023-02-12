@@ -30,6 +30,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         this.shoppingListService = shoppingListService;
 
         AddLinkListItemCommand = new RelayCommand(AddLinkListItem);
+        RenameLinkListItemCommand = new RelayCommand(RenameLinkListItem);
         DeleteLinkListItemCommand = new RelayCommand(DeleteLinkListItem);
 
         ShoppingLists = new ObservableCollection<ShoppingList>();
@@ -112,6 +113,11 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         get; set;
     }
 
+    public RelayCommand RenameLinkListItemCommand
+    {
+        get; set;
+    }
+
     public RelayCommand DeleteLinkListItemCommand
     {
         get; set;
@@ -146,6 +152,14 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         //count++;
         ShoppingLists.Add(new ShoppingList(NewListName.Trim()));
         NewListName = string.Empty;
+    }
+
+    private void RenameLinkListItem()
+    {
+        SelectedItem.Name = NewListName;
+        NewListName = string.Empty;
+
+        shoppingListService.SaveShoppingListsAsync(ShoppingLists);
     }
 
     private void DeleteLinkListItem()

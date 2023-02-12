@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ShoppingLinkManager.Core.Models;
 
-public class ShoppingList
+public class ShoppingList : ObservableObject
 {
+    private string name;
+
     public ShoppingList(string name)
     {
         Guid = Guid.NewGuid();
@@ -21,7 +19,8 @@ public class ShoppingList
 
     public string Name
     {
-        get; set;
+        get => name;
+        set => SetProperty(ref name, value);
     }
 
     public string Description

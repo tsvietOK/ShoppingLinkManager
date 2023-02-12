@@ -40,11 +40,11 @@
                     </DataTemplate>
                 </controls:ListDetailsView.ListPaneEmptyContentTemplate>
                 <controls:ListDetailsView.ListHeaderTemplate>
-                    <DataTemplate x:DataType="models:ShoppingList">
+                    <DataTemplate>
                         <Grid Height="60">
                             <TextBlock VerticalAlignment="Center"
                                        Style="{StaticResource TitleTextBlockStyle}"
-                                       Text="{x:Bind Name}" />
+                                       Text="{Binding}" />
                         </Grid>
                     </DataTemplate>
                 </controls:ListDetailsView.ListHeaderTemplate>
@@ -62,7 +62,7 @@
                                         Margin="{StaticResource SmallLeftMargin}"
                                         VerticalAlignment="Center">
                                 <TextBlock Style="{StaticResource BaseTextBlockStyle}"
-                                           Text="{x:Bind Name}"
+                                           Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                            TextTrimming="CharacterEllipsis"
                                            TextWrapping="NoWrap"
                                            ToolTipService.ToolTip="{x:Bind Name}" />
@@ -87,7 +87,7 @@
                             <TextBlock Margin="12,0,0,0"
                                        RelativePanel.RightOf="FromEllipse"
                                        Style="{StaticResource SubheaderTextBlockStyle}"
-                                       Text="{x:Bind Name}"
+                                       Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                        TextTrimming="CharacterEllipsis"
                                        TextWrapping="NoWrap"
                                        ToolTipService.ToolTip="{x:Bind Name}" />
@@ -122,7 +122,7 @@
                                                  IsOpen="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay}"
                                                  Message="List with this name already exists or name is empty"
                                                  Severity="Error" />
-                                        <Button Click="Button_Click"
+                                        <Button Click="AddLinkListButton_Click"
                                                 Command="{x:Bind ViewModel.AddLinkListItemCommand}"
                                                 Content="Add"
                                                 IsEnabled="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay, Converter={StaticResource BoolNegationConverter}}" />
@@ -131,9 +131,28 @@
 
                             </AppBarButton.Flyout>
                         </AppBarButton>
-                        <AppBarButton Icon="Edit"
+                        <AppBarButton AllowFocusOnInteraction="True"
+                                      Icon="Edit"
                                       IsEnabled="{x:Bind ViewModel.IsRenameButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Label="Rename list" />
+                                      Label="Rename list">
+                            <AppBarButton.Flyout>
+                                <Flyout x:Name="RenameItemFlayout" Placement="Bottom">
+                                    <StackPanel Spacing="10">
+                                        <TextBlock Text="Enter a new name of the list:" />
+                                        <TextBox Text="{x:Bind ViewModel.NewListName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <InfoBar IsClosable="False"
+                                                 IsOpen="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay}"
+                                                 Message="List with this name already exists or name is empty"
+                                                 Severity="Error" />
+                                        <Button Click="RenameLinkListButton_Click"
+                                                Command="{x:Bind ViewModel.RenameLinkListItemCommand}"
+                                                Content="Rename"
+                                                IsEnabled="{x:Bind ViewModel.IsListNameValid, Mode=TwoWay, Converter={StaticResource BoolNegationConverter}}" />
+                                    </StackPanel>
+                                </Flyout>
+
+                            </AppBarButton.Flyout>
+                        </AppBarButton>
                         <AppBarButton Command="{x:Bind ViewModel.DeleteLinkListItemCommand}"
                                       Icon="Delete"
                                       IsEnabled="{x:Bind ViewModel.IsDeleteButtonEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
