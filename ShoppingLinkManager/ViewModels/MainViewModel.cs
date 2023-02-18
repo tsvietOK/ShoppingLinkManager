@@ -2,8 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using ShoppingLinkManager.Contracts.Services;
 using ShoppingLinkManager.Contracts.ViewModels;
 using ShoppingLinkManager.Core.Contracts.Services;
@@ -21,7 +19,6 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     private bool isDeleteButtonEnabled;
     private ShoppingList selectedItem;
     private int selectedItemIndex;
-    private InfoBarSeverity infoBarSeverity;
     private bool isListNameValid = true;
     private string newListName;
 
@@ -100,12 +97,6 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     {
         get => isListNameValid;
         set => SetProperty(ref isListNameValid, value);
-    }
-
-    public InfoBarSeverity InfoBarSeverity
-    {
-        get => infoBarSeverity;
-        set => SetProperty(ref infoBarSeverity, value);
     }
 
     public RelayCommand AddLinkListItemCommand
