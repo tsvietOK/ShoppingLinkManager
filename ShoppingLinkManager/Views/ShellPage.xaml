@@ -32,7 +32,7 @@
                         IsBackButtonVisible="Auto"
                         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
                         IsSettingsVisible="True"
-                        PaneDisplayMode="LeftCompact"
+                        PaneDisplayMode="LeftMinimal"
                         SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.MenuItems>
                 <!--
