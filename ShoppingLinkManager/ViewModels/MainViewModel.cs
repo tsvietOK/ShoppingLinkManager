@@ -1,34 +1,27 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ShoppingLinkManager.Contracts.Services;
 using ShoppingLinkManager.Contracts.ViewModels;
-using ShoppingLinkManager.Core.Contracts.Services;
 using ShoppingLinkManager.Core.Models;
-using ShoppingLinkManager.Core.Services;
 
 namespace ShoppingLinkManager.ViewModels;
 
-public class MainViewModel : ObservableRecipient, INavigationAware
+public partial class MainViewModel : ObservableRecipient, INavigationAware
 {
     private readonly IShoppingListService shoppingListService;
 
-    private bool isAddButtonEnabled = true;
-    private bool isRenameButtonEnabled;
-    private bool isDeleteButtonEnabled;
-    private ShoppingList selectedItem;
-    private int selectedItemIndex;
-    private bool isListNameValid = true;
+    [ObservableProperty] private bool isAddButtonEnabled = true;
+    [ObservableProperty] private bool isRenameButtonEnabled;
+    [ObservableProperty] private bool isDeleteButtonEnabled;
+    [ObservableProperty] private ShoppingList selectedItem;
+    [ObservableProperty] private int selectedItemIndex;
+    [ObservableProperty] private bool isListNameValid = true;
     private string newListName;
 
     public MainViewModel(IShoppingListService shoppingListService)
     {
         this.shoppingListService = shoppingListService;
-
-        AddLinkListItemCommand = new RelayCommand(AddLinkListItem);
-        RenameLinkListItemCommand = new RelayCommand(RenameLinkListItem);
-        DeleteLinkListItemCommand = new RelayCommand(DeleteLinkListItem);
 
         ShoppingLists = new ObservableCollection<ShoppingList>();
     }
@@ -36,49 +29,6 @@ public class MainViewModel : ObservableRecipient, INavigationAware
     public ObservableCollection<ShoppingList> ShoppingLists
     {
         get; set;
-    }
-
-    public ShoppingList SelectedItem
-    {
-        get => selectedItem;
-        set
-        {
-            SetProperty(ref selectedItem, value);
-            if (selectedItem == null)
-            {
-                IsDeleteButtonEnabled = false;
-                IsRenameButtonEnabled = false;
-            }
-            else
-            {
-                IsDeleteButtonEnabled = true;
-                IsRenameButtonEnabled = true;
-            }
-        }
-    }
-
-    public int SelectedItemIndex
-    {
-        get => selectedItemIndex;
-        set => SetProperty(ref selectedItemIndex, value);
-    }
-
-    public bool IsAddButtonEnabled
-    {
-        get => isAddButtonEnabled;
-        set => SetProperty(ref isAddButtonEnabled, value);
-    }
-
-    public bool IsRenameButtonEnabled
-    {
-        get => isRenameButtonEnabled;
-        set => SetProperty(ref isRenameButtonEnabled, value);
-    }
-
-    public bool IsDeleteButtonEnabled
-    {
-        get => isDeleteButtonEnabled;
-        set => SetProperty(ref isDeleteButtonEnabled, value);
     }
 
     public string NewListName
@@ -93,25 +43,18 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         }
     }
 
-    public bool IsListNameValid
+    partial void OnSelectedItemChanged(ShoppingList value)
     {
-        get => isListNameValid;
-        set => SetProperty(ref isListNameValid, value);
-    }
-
-    public RelayCommand AddLinkListItemCommand
-    {
-        get; set;
-    }
-
-    public RelayCommand RenameLinkListItemCommand
-    {
-        get; set;
-    }
-
-    public RelayCommand DeleteLinkListItemCommand
-    {
-        get; set;
+        if (value == null)
+        {
+            IsDeleteButtonEnabled = false;
+            IsRenameButtonEnabled = false;
+        }
+        else
+        {
+            IsDeleteButtonEnabled = true;
+            IsRenameButtonEnabled = true;
+        }
     }
 
     public void OnNavigatedFrom()
@@ -137,6 +80,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         shoppingListService.SaveShoppingListsAsync(ShoppingLists);
     }
 
+    [RelayCommand]
     private void AddLinkListItem()
     {
         //var count = LinkLists.Count;
@@ -144,6 +88,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         ShoppingLists.Add(new ShoppingList(NewListName.Trim()));
     }
 
+    [RelayCommand]
     private void RenameLinkListItem()
     {
         SelectedItem.Name = NewListName;
@@ -151,6 +96,7 @@ public class MainViewModel : ObservableRecipient, INavigationAware
         shoppingListService.SaveShoppingListsAsync(ShoppingLists);
     }
 
+    [RelayCommand]
     private void DeleteLinkListItem()
     {
         ShoppingLists.RemoveAt(SelectedItemIndex);
