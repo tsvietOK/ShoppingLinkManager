@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
 using Windows.UI;
+using Windows.UI.ViewManagement;
 
 namespace ShoppingLinkManager.Helpers;
 
@@ -27,6 +28,14 @@ internal class TitleBarHelper
     {
         if (App.MainWindow.ExtendsContentIntoTitleBar)
         {
+            if (theme == ElementTheme.Default)
+            {
+                var uiSettings = new UISettings();
+                var background = uiSettings.GetColorValue(UIColorType.Background);
+
+                theme = background == Colors.White ? ElementTheme.Light : ElementTheme.Dark;
+            }
+
             if (theme == ElementTheme.Default)
             {
                 theme = Application.Current.RequestedTheme == ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
@@ -88,6 +97,25 @@ internal class TitleBarHelper
                 SendMessage(hwnd, WMACTIVATE, WAACTIVE, IntPtr.Zero);
                 SendMessage(hwnd, WMACTIVATE, WAINACTIVE, IntPtr.Zero);
             }
+        }
+    }
+
+    public static void ApplySystemThemeToCaptionButtons()
+    {
+        var res = Application.Current.Resources;
+        var frame = App.AppTitlebar as FrameworkElement;
+        if (frame != null)
+        {
+            if (frame.ActualTheme == ElementTheme.Dark)
+            {
+                res["WindowCaptionForeground"] = Colors.White;
+            }
+            else
+            {
+                res["WindowCaptionForeground"] = Colors.Black;
+            }
+
+            UpdateTitleBar(frame.ActualTheme);
         }
     }
 }
